@@ -25,6 +25,17 @@
 
 ## Usage
 
+### Add or replace a single plugin containing static content
+
+To develop unminified plugin that loads multiple files, use this.
+
+1. Create a new proxied browser window and start mitmproxy via Docker:
+   ```
+   ~/mitm-gerrit/mitm-single-plugin.sh ./path/to/static/plugin.html
+   ```
+2. Open any *.googlesource.com domain in proxied window
+3. plugin.html and ./path/to/static/* will be served
+
 ### Add or replace a minified plugin for *.googlesource.com
 
 This flow assumes no additional .html/.js are needed, i.e. the plugin is a single file.

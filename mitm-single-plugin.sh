@@ -6,10 +6,6 @@ if [[ -z "$1" ]]; then
     exit 1
 fi
 
-realpath2() {
-    [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
-
 realpath() {
   OURPWD=$PWD
   cd "$(dirname "$1")"

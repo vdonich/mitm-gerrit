@@ -34,7 +34,7 @@ import os.path
 import json
 
 class Server:
-    def __init__(self, devpath, plugins, pluginroot, assets):
+    def __init__(self, devpath, plugins, pluginroot, assets, strip_assets):
         if devpath:
             print("Serving app from " + devpath)
         if pluginroot:
@@ -52,6 +52,7 @@ class Server:
             self.plugins = {}
         self.devpath = devpath
         self.pluginroot = pluginroot
+        self.strip_assets = strip_assets
 
     def readfile(self, path):
         with open(path, 'rb') as contentfile:
@@ -59,6 +60,14 @@ class Server:
 
 @concurrent
 def response(flow: http.HTTPFlow) -> None:
+    if server.strip_assets:
+        assets_bundle = 'googlesource.com/polygerrit_assets'
+        assets_pos = flow.response.text.find(assets_bundle)
+        if assets_pos != -1:
+            t = flow.response.text
+            flow.response.text = t[:t.rfind('<', 0, assets_pos)] + t[t.find('>', assets_pos) + 1:]
+            return
+
     if server.assets_root:
         marker = 'webcomponents-lite.js"></script>'
         pos = flow.response.text.find(marker)
@@ -122,7 +131,9 @@ parser.add_argument("--app", type=str, default="", help="Path to /polygerrit-ui/
 parser.add_argument("--plugins", type=str, default="", help="Comma-separated list of plugin files to add/replace")
 parser.add_argument("--plugin_root", type=str, default="", help="Path containing individual plugin files to replace")
 parser.add_argument("--assets", type=str, default="", help="Path containing assets file to import.")
+parser.add_argument("--strip_assets", action="store_true", help="Strip plugin bundles from the response.")
 args = parser.parse_args()
 server = Server(expandpath(args.app) + '/',
                 args.plugins, expandpath(args.plugin_root) + '/',
-                args.assets and expandpath(args.assets))
+                args.assets and expandpath(args.assets),
+                args.strip_assets)

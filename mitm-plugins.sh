@@ -30,4 +30,4 @@ mitm_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 ${mitm_dir}/dev-chrome.sh &
 
-${mitm_dir}/mitm-docker.sh "serve-app-dev.py --plugins ${absolute_plugin_paths}"
+${mitm_dir}/mitm-docker.sh "serve-app-dev.py --plugins ${absolute_plugin_paths} --strip_assets"

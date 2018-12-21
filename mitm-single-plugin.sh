@@ -24,7 +24,6 @@ realpath() {
 plugin=$(realpath $1)
 plugin_root=$(dirname ${plugin})
 
-gerrit_dir=$(pwd)
 mitm_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 ${mitm_dir}/dev-chrome.sh &

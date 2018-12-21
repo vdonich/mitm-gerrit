@@ -25,7 +25,9 @@
 
 ## Usage
 
-### Add or replace a plugin for *.googlesource.com
+### Add or replace a minified plugin for *.googlesource.com
+
+This flow assumes no additional .html/.js are needed, i.e. the plugin is a single file.
 
 1. Create a new proxied browser window and start mitmproxy via Docker:
    ```

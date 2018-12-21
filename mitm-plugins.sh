@@ -3,6 +3,7 @@
 if [[ -z "$1" ]]; then
     echo This script injects plugins for *.googlesource.com.
     echo Provide plugin paths, comma-separated, as a parameter.
+    echo This script assumes files do not have dependencies, i.e. minified.
     exit 1
 fi
 
